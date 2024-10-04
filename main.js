@@ -100,8 +100,11 @@ app.post("/addOrder", (req, res) => {
     req.body.issue,
     req.body.description,
     req.body.client,
-    req.body.status
+    req.body.status,
+    req.body.master,
+    req.body.comments.map((comment) => ({ text: comment }))
   );
+  repositoryList.push(newOrder);
 });
 
 app.put("/editOrder", (req, res) => {

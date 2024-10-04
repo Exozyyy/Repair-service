@@ -3,27 +3,27 @@
     <meta charset="UTF-8" />
     <title>Оставить заявку</title>
   </head>
+  <link rel="stylesheet" href="/neworder.css">
   <body>
     <div class="container">
       <h1>Оставить заявку на ремонт оборудования</h1>
       <form id="orderForm">
-        <label for="customerPhone">Устройство</label>
-        <input type="text" id="customerPhone">
-        <label for="typeIssue">Неисправность</label>
-        <input type="text" id="typeIssue">
+        <label for="device">Устройство</label>
+        <input type="text" id="device">
+        <label for="issue">Неисправность</label>
+        <input type="text" id="issue">
         <br>
         <label for="description">Описание</label>
         <input type="text" id="description">
-        <label for="customerName">Имя клиента:</label>
-        <input type="text" id="customerName" required>
-        <button>
+        <label for="client">Имя клиента:</label>
+        <input type="text" id="client" required>
+        <button id="submitReq">
           Отправить заявку
         </button>
         
 
     </div>
-<script>
-
+<script src="/neworder.js">
 </script>
   </body>
 </html>
