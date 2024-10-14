@@ -108,18 +108,19 @@ app.post("/addOrder", (req, res) => {
 });
 
 app.put("/editOrder", (req, res) => {
-  const dto = repositoryList.findIndex(
+  const index = repositoryList.findIndex(
     (order) => order.number === parseInt(req.body.number)
   );
-  if (dto === -1) {
+  if (index === -1) {
     return res.status(404).send("Order not found");
   }
-  const order = repositoryList[dto];
-  dto.status = order.status;
-  dto.description = order.description;
-  dto.master = order.master;
-  dto.comments = [...dto.comments, ...req.body.comments];
-
+  const order = repositoryList[index];
+  order.status = req.body.status || order.status;
+  order.description = req.body.description || order.description;
+  order.master = req.body.master || order.master;
+  if (req.body.comments) {
+    order.comments = [...order.comments, ...req.body.comments];
+  }
   res.send(order);
 });
 
