@@ -3,6 +3,41 @@ const table = document.querySelector("table");
 const foundOrder = document.getElementById("searchInput");
 const clickFindOrder = document.getElementById("searchbtn");
 
+const showStat = document.getElementById("stats");
+const statplacement = document.getElementById("statplace");
+
+showStat.addEventListener("click", async () => {
+  try {
+    const response = await fetch("http://localhost:3000/statistics");
+    if (!response.ok) {
+      throw new Error(`${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (showStat.innerText.toLowerCase() === "скрыть") {
+      showStat.innerHTML = `<h2>показать статистику</h2>`;
+      statplacement.innerHTML = ``;
+    } else {
+      showStat.innerHTML = `<h2>скрыть</h2>`;
+      statplacement.innerHTML = `
+        <p>Завершенных заказов: ${data.completedOrdersCount}</p>
+        <p>Среднее время выполнения заказа: ${
+          data.averageCompletionTime
+        } дней</p>
+        <p>Статистика по проблемам:</p>
+        <ul>
+          ${Object.entries(data.issuesStats)
+            .map(([issue, count]) => `<li>${issue}: ${count}</li>`)
+            .join("")}
+        </ul>
+      `;
+    }
+  } catch (e) {
+    console.error(e);
+  }
+});
+
 clickFindOrder.addEventListener("click", async () => {
   const searchValue = foundOrder.value.toLowerCase();
   if (searchValue) {

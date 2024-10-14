@@ -137,19 +137,11 @@ app.get("/order/:number", (req, res) => {
   res.send(order);
 });
 
-app.get("/completedOrders", (req, res) => {
+app.get("/statistics", (req, res) => {
   const completedOrders = repositoryList.filter(
     (order) => order.status === "Completed"
   );
-  res.send(completedOrders);
-});
-
-app.get("/averageCompletionTime", (req, res) => {
   const averageCompletionTime = calculateAverageCompletionTime();
-  res.send(`Среднее время завершения заказов: ${averageCompletionTime} дня`);
-});
-
-app.get("/objectIssues", (req, res) => {
   const issuesStats = {};
   repositoryList.forEach((order) => {
     if (issuesStats[order.issue]) {
@@ -158,9 +150,12 @@ app.get("/objectIssues", (req, res) => {
       issuesStats[order.issue] = 1;
     }
   });
-  res.send(issuesStats);
+  res.send({
+    completedOrdersCount: completedOrders.length,
+    averageCompletionTime,
+    issuesStats,
+  });
 });
-
 app.listen(3000, () => {
   console.log("запущен на http://localhost:3000/");
 });
